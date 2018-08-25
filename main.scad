@@ -6,7 +6,7 @@ use <functions.scad>
 
 $fn=50;
 
-small_cylinder_diam=5;
+small_cylinder_diam=4;
 max_cylinder_diam=30;
 main_cylinder_diam=20;
 
