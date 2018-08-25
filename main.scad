@@ -25,21 +25,20 @@ fit_cube_width=10;
 nozzle_diameter=0.4;
 first_layer_tolerance=sqrt(nozzle_diameter)/2;
 
-create_base(base_width=base_width,base_height=base_height,distance_base_height_cylinder_center=distance_base_height_cylinder_center,small_cylinder_diam=small_cylinder_diam,logo_width=logo_width,wall_thickness=wall_thickness,distance_between_rollers=distance_between_rollers);
-
-translate([-distance_between_rollers/2,0,base_height-distance_base_height_cylinder_center]) rotate([90,0,0])
+module left_front_assembly(){
+    translate([-distance_between_rollers/2,0,base_height-distance_base_height_cylinder_center]) rotate([90,0,0])
 half_roller(max_cylinder_diam=max_cylinder_diam,main_cylinder_diam=main_cylinder_diam,small_cylinder_diam=small_cylinder_diam,fit_cube_length=fit_cube_length,fit_cube_width=fit_cube_width,base_width=base_width,washer_width=washer_width,first_layer_tolerance=first_layer_tolerance,wall_thickness=wall_thickness,washer_tolerance=washer_tolerance);
-
-mirror([0,1,0]) translate([-distance_between_rollers/2,0,base_height-distance_base_height_cylinder_center]) rotate([90,0,0])
-half_roller(max_cylinder_diam=max_cylinder_diam,main_cylinder_diam=main_cylinder_diam,small_cylinder_diam=small_cylinder_diam,fit_cube_length=fit_cube_length,fit_cube_width=fit_cube_width,base_width=base_width,washer_width=washer_width,first_layer_tolerance=first_layer_tolerance,wall_thickness=wall_thickness,washer_tolerance=washer_tolerance);
-
-mirror([1,0,0]) {
-translate([-distance_between_rollers/2,0,base_height-distance_base_height_cylinder_center]) rotate([90,0,0])
-half_roller(max_cylinder_diam=max_cylinder_diam,main_cylinder_diam=main_cylinder_diam,small_cylinder_diam=small_cylinder_diam,fit_cube_length=fit_cube_length,fit_cube_width=fit_cube_width,base_width=base_width,washer_width=washer_width,first_layer_tolerance=first_layer_tolerance,wall_thickness=wall_thickness,washer_tolerance=washer_tolerance);
-mirror([0,1,0]) translate([-distance_between_rollers/2,0,base_height-distance_base_height_cylinder_center]) rotate([90,0,0])
-half_roller(max_cylinder_diam=max_cylinder_diam,main_cylinder_diam=main_cylinder_diam,small_cylinder_diam=small_cylinder_diam,fit_cube_length=fit_cube_length,fit_cube_width=fit_cube_width,base_width=base_width,washer_width=washer_width,first_layer_tolerance=first_layer_tolerance,wall_thickness=wall_thickness,washer_tolerance=washer_tolerance);
+    translate([-distance_between_rollers/2,wall_thickness+washer_width/2+washer_tolerance-base_width/2,base_height-distance_base_height_cylinder_center]) rotate([90,0,0]) create_washer(washer_width=washer_width,washer_diam=main_cylinder_diam,small_cylinder_diam=small_cylinder_diam);
 }
 
-translate([-distance_between_rollers/2,wall_thickness+washer_width/2+washer_tolerance-base_width/2,base_height-distance_base_height_cylinder_center]) rotate([90,0,0]) create_washer(washer_width=washer_width,washer_diam=main_cylinder_diam,small_cylinder_diam=small_cylinder_diam);
+module front_assembly(){
+    left_front_assembly();
+    mirror([0,1,0]) left_front_assembly();
+}
+
+create_base(base_width=base_width,base_height=base_height,distance_base_height_cylinder_center=distance_base_height_cylinder_center,small_cylinder_diam=small_cylinder_diam,logo_width=logo_width,wall_thickness=wall_thickness,distance_between_rollers=distance_between_rollers);
+
+front_assembly();
+mirror([1,0,0]) front_assembly();
 
 translate([-distance_between_rollers/2-fit_cube_width/2,fit_cube_length/2,base_height-distance_base_height_cylinder_center-fit_cube_width/2]) rotate([90,0,0]) fit_cube(fit_cube_length=fit_cube_length,fit_cube_width=fit_cube_width,first_layer_tolerance=first_layer_tolerance);
