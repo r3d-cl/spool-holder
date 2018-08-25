@@ -4,7 +4,7 @@ module logo(logo_width){
     length_por_width=2.065;
     length=30;
     width=length/length_por_width;
-    rotate([0,0,90]) translate([-length/2,-width/2,0]) resize([length,width]) linear_extrude(height = logo_width+1) import("logo.dxf");
+    rotate([0,0,90]) translate([-length/2,-width/2,0]) resize([length,width]) linear_extrude(height = logo_width) import("logo.dxf");
 }
 
 module space_for_rollers(x,base_width,axis_height,small_cylinder_diam,radius_tolerance){
@@ -16,18 +16,20 @@ module space_for_rollers(x,base_width,axis_height,small_cylinder_diam,radius_tol
     }
 }
 
-module create_base(base_width,small_cylinder_diam,main_cylinder_diam){
-    wall_thickness=3;
-    small_cylinder_radius_tol=1;
-    distance_between_rollers=50;
-    radius_tolerance=1;
-    distance_base_height_cylinder_center=small_cylinder_diam;
-    distance_tolerance=1;
-    base_height=wall_thickness+distance_tolerance+main_cylinder_diam/2+distance_base_height_cylinder_center;
-    distance_tolerance=2;
-    logo_width=1;
+module first_support_wall(base_length,wall_thickness,base_width){
+    translate ([-base_length/2,wall_thickness-base_width/2,0]) rotate([90,0,90]) prism(side=10,height=wall_thickness);
+}
 
-    base_length=distance_between_rollers+small_cylinder_diam+2*(radius_tolerance+wall_thickness);
+module left_support_walls(base_length,wall_thickness,base_width){
+    first_support_wall(base_length,wall_thickness,base_width);
+    translate([base_length-wall_thickness,0,0]) first_support_wall(base_length,wall_thickness,base_width);
+}
+
+module create_base(){
+    small_cylinder_radius_tol=1;
+    radius_tolerance=1;
+
+    base_length=distance_between_rollers+small_cylinder_diam+2*radius_tolerance+6*wall_thickness;
 
     difference(){
         translate([-base_length/2,-base_width/2,0]) cube([base_length,base_width,base_height]);
@@ -36,7 +38,10 @@ module create_base(base_width,small_cylinder_diam,main_cylinder_diam){
         axis_height=base_height-distance_base_height_cylinder_center;
         space_for_rollers(-distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance);
         space_for_rollers(distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance);
-        translate([0,0,wall_thickness-logo_width]) logo(logo_width);
      }
+     translate([0,0,wall_thickness]) logo(logo_width);
+     side=20;
+     left_support_walls(base_length,wall_thickness,base_width);
+     mirror([0,1,0]) left_support_walls(base_length,wall_thickness,base_width);
 
 }

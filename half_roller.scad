@@ -1,10 +1,8 @@
-module half_roller(max_cylinder_diam,small_cylinder_diam,fit_cube_length,fit_cube_width,base_width,washer_width,first_layer_tolerance){
+module half_roller(){
     small_cylinder_overlap=2;
     fit_tolerance=0.2;
-    washer_tolerance=1;
-    main_cylinder_diam=20;
 
-    length_main_half_cylinder=(base_width-fit_tolerance)/2-washer_width-2*washer_tolerance;
+    length_main_half_cylinder=(base_width-fit_tolerance)/2-washer_width-2*washer_tolerance-wall_thickness;
 
     difference(){
         union(){
