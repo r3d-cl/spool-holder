@@ -21,9 +21,9 @@ module create_base(base_width,small_cylinder_diam,main_cylinder_diam){
     small_cylinder_radius_tol=1;
     distance_between_rollers=50;
     radius_tolerance=1;
-    distance_base_height_cylinder_centrum=small_cylinder_diam;
+    distance_base_height_cylinder_center=small_cylinder_diam;
     distance_tolerance=1;
-    base_height=wall_thickness+distance_tolerance+main_cylinder_diam/2+distance_base_height_cylinder_centrum;
+    base_height=wall_thickness+distance_tolerance+main_cylinder_diam/2+distance_base_height_cylinder_center;
     distance_tolerance=2;
     logo_width=1;
 
@@ -33,7 +33,7 @@ module create_base(base_width,small_cylinder_diam,main_cylinder_diam){
         translate([-base_length/2,-base_width/2,0]) cube([base_length,base_width,base_height]);
         pocket_width=base_width-2*wall_thickness;
         translate([-base_length/2-1,-pocket_width/2,wall_thickness]) cube([base_length+2,pocket_width,base_height]);
-        axis_height=base_height-distance_base_height_cylinder_centrum;
+        axis_height=base_height-distance_base_height_cylinder_center;
         space_for_rollers(-distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance);
         space_for_rollers(distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance);
         translate([0,0,wall_thickness-logo_width]) logo(logo_width);
