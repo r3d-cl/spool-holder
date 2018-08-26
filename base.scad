@@ -16,19 +16,36 @@ module space_for_rollers(x,base_width,axis_height,small_cylinder_diam,radius_tol
     }
 }
 
-module first_support_wall(base_length,wall_thickness,base_width){
+module first_support_wall(){
     x_distance_wall_support_centers=40;
-    translate ([x_distance_wall_support_centers/2-wall_thickness/2,wall_thickness-base_width/2,0]) rotate([90,0,90]) prism(side=12,height=wall_thickness);
+    translate ([x_distance_wall_support_centers/2-wall_thickness/2,wall_thickness-base_width/2,0]) rotate([90,0,90]) prism(side=wall_support_height,height=wall_thickness);
 }
 
-module left_support_walls(base_length,wall_thickness,base_width){
-    first_support_wall(base_length,wall_thickness,base_width);
-    mirror([1,0,0]) first_support_wall(base_length,wall_thickness,base_width);
+module left_support_walls(){
+    first_support_wall(base_length=base_length,wall_thickness=wall_thickness,base_width=base_width,wall_support_height=wall_support_height);
+    mirror([1,0,0]) first_support_wall(base_length=base_length,wall_thickness=wall_thickness,base_width=base_width,wall_support_height=wall_support_height);
+}
+
+module support_walls(){
+    left_support_walls(base_length=base_length,wall_thickness=wall_thickness,base_width=base_width,wall_support_height=wall_support_height);
+    mirror([0,1,0]) left_support_walls(base_length=base_length,wall_thickness=wall_thickness,base_width=base_width,wall_support_height=wall_support_height);
+}
+
+module half_save_material_pocket(){
+    pocket_length=100;
+    //pocket_depth=10;
+    translate([0,500,base_height]) rotate([90,0,0]) linear_extrude(height = 1000) polygon(points=[[-pocket_length/2,1],[-pocket_length/2,0],[pocket_depth-pocket_length/2,-pocket_depth],[1,-pocket_depth],[1,0]]);
+}
+
+module save_material_pocket(){
+    half_save_material_pocket(base_height=base_height,pocket_depth=pocket_depth);
+    mirror([1,0,0]) half_save_material_pocket(base_height=base_height,pocket_depth=pocket_depth);
 }
 
 module create_base(){
     small_cylinder_radius_tol=1;
     radius_tolerance=1;
+    wall_support_height=12;
 
     base_length=distance_between_rollers+small_cylinder_diam+2*radius_tolerance+6*wall_thickness;
 
@@ -39,10 +56,8 @@ module create_base(){
         axis_height=base_height-distance_base_height_cylinder_center;
         space_for_rollers(-distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance);
         space_for_rollers(distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance);
+        save_material_pocket(base_height=base_height,pocket_depth=base_height-wall_support_height);
      }
      translate([0,0,wall_thickness]) logo(logo_width);
-     side=20;
-
-     left_support_walls(base_length,wall_thickness,base_width);
-     mirror([0,1,0]) left_support_walls(base_length,wall_thickness,base_width);
+     support_walls(base_length=base_length,wall_thickness=wall_thickness,base_width=base_width,wall_support_height=wall_support_height);
 }
