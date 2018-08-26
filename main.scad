@@ -11,7 +11,7 @@ max_cylinder_diam=30;
 main_cylinder_diam=20;
 
 base_width=120;
-wall_thickness=3;
+wall_thickness=2;
 logo_width=2;
 distance_between_rollers=120;
 distance_base_height_cylinder_center=2*small_cylinder_diam;
@@ -36,9 +36,10 @@ module front_assembly(){
     mirror([0,1,0]) left_front_assembly();
 }
 
-create_base(base_width=base_width,base_height=base_height,distance_base_height_cylinder_center=distance_base_height_cylinder_center,small_cylinder_diam=small_cylinder_diam,logo_width=logo_width,wall_thickness=wall_thickness,distance_between_rollers=distance_between_rollers);
+//create_base(base_width=base_width,base_height=base_height,distance_base_height_cylinder_center=distance_base_height_cylinder_center,small_cylinder_diam=small_cylinder_diam,logo_width=logo_width,wall_thickness=wall_thickness,distance_between_rollers=distance_between_rollers);
 
 //front_assembly();
 //mirror([1,0,0]) front_assembly();
+half_roller(max_cylinder_diam=max_cylinder_diam,main_cylinder_diam=main_cylinder_diam,small_cylinder_diam=small_cylinder_diam,fit_cube_length=fit_cube_length,fit_cube_width=fit_cube_width,base_width=base_width,washer_width=washer_width,first_layer_tolerance=first_layer_tolerance,wall_thickness=wall_thickness,washer_tolerance=washer_tolerance);
 
 //translate([-distance_between_rollers/2-fit_cube_width/2,fit_cube_length/2,base_height-distance_base_height_cylinder_center-fit_cube_width/2]) rotate([90,0,0]) fit_cube(fit_cube_length=fit_cube_length,fit_cube_width=fit_cube_width,first_layer_tolerance=first_layer_tolerance);
