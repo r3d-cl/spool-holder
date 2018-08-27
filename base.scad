@@ -7,12 +7,10 @@ module logo(logo_width){
     rotate([0,0,90]) translate([-length/2,-width/2,0]) resize([length,width]) linear_extrude(height = logo_width) import("logo.dxf");
 }
 
-module space_for_rollers(x,base_width,axis_height,small_cylinder_diam,radius_tolerance){
-    pocket_width=small_cylinder_diam+2*radius_tolerance;
-
+module space_for_rollers(x,base_width,axis_height,small_cylinder_diam,radius_tolerance,small_cylinder_pocket_diam){
     translate([x,0,axis_height]) {
-        rotate([90,0,0]) create_cylinder(base_width+1,pocket_width);
-        translate([-pocket_width/2,-(base_width+1)/2,0]) cube([pocket_width,base_width+1,100,]);
+        rotate([90,0,0]) create_cylinder(base_width+1,small_cylinder_pocket_diam);
+        translate([-small_cylinder_pocket_diam/2,-(base_width+1)/2,0]) cube([small_cylinder_pocket_diam,base_width+1,100,]);
     }
 }
 
@@ -54,8 +52,8 @@ module create_base(){
         pocket_width=base_width-2*wall_thickness;
         translate([-base_length/2-1,-pocket_width/2,wall_thickness]) cube([base_length+2,pocket_width,base_height]);
         axis_height=base_height-distance_base_height_cylinder_center;
-        space_for_rollers(-distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance);
-        space_for_rollers(distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance);
+        space_for_rollers(-distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance,small_cylinder_pocket_diam);
+        space_for_rollers(distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance,small_cylinder_pocket_diam);
         save_material_pocket(base_height=base_height,pocket_depth=base_height-wall_support_height);
      }
      translate([0,0,wall_thickness]) logo(logo_width);

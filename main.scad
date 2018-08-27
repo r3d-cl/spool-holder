@@ -16,6 +16,8 @@ logo_width=2;
 distance_between_rollers=120;
 distance_base_height_cylinder_center=2*small_cylinder_diam;
 base_height=wall_thickness+5+main_cylinder_diam/2+distance_base_height_cylinder_center+logo_width;
+radius_tolerance=1;
+small_cylinder_pocket_diam=small_cylinder_diam+2*radius_tolerance;
 
 washer_width=2;
 washer_tolerance=1;
@@ -28,7 +30,7 @@ first_layer_tolerance=sqrt(nozzle_diameter)/2;
 module left_front_assembly(){
     translate([-distance_between_rollers/2,0,base_height-distance_base_height_cylinder_center]) rotate([90,0,0])
 half_roller(max_cylinder_diam=max_cylinder_diam,main_cylinder_diam=main_cylinder_diam,small_cylinder_diam=small_cylinder_diam,fit_cube_length=fit_cube_length,fit_cube_width=fit_cube_width,base_width=base_width,washer_width=washer_width,first_layer_tolerance=first_layer_tolerance,wall_thickness=wall_thickness,washer_tolerance=washer_tolerance);
-    translate([-distance_between_rollers/2,wall_thickness+washer_width/2+washer_tolerance-base_width/2,base_height-distance_base_height_cylinder_center]) rotate([90,0,0]) create_washer(washer_width=washer_width,washer_diam=main_cylinder_diam,small_cylinder_diam=small_cylinder_diam);
+    translate([-distance_between_rollers/2,wall_thickness+washer_width/2+washer_tolerance-base_width/2,base_height-distance_base_height_cylinder_center]) rotate([90,0,0]) create_washer(washer_width=washer_width,washer_diam=main_cylinder_diam,small_cylinder_pocket_diam=small_cylinder_pocket_diam);
 }
 
 module front_assembly(){
@@ -40,6 +42,8 @@ module front_assembly(){
 
 //front_assembly();
 //mirror([1,0,0]) front_assembly();
-half_roller(max_cylinder_diam=max_cylinder_diam,main_cylinder_diam=main_cylinder_diam,small_cylinder_diam=small_cylinder_diam,fit_cube_length=fit_cube_length,fit_cube_width=fit_cube_width,base_width=base_width,washer_width=washer_width,first_layer_tolerance=first_layer_tolerance,wall_thickness=wall_thickness,washer_tolerance=washer_tolerance);
+//half_roller(max_cylinder_diam=max_cylinder_diam,main_cylinder_diam=main_cylinder_diam,small_cylinder_diam=small_cylinder_diam,fit_cube_length=fit_cube_length,fit_cube_width=fit_cube_width,base_width=base_width,washer_width=washer_width,first_layer_tolerance=first_layer_tolerance,wall_thickness=wall_thickness,washer_tolerance=washer_tolerance);
 
 //translate([-distance_between_rollers/2-fit_cube_width/2,fit_cube_length/2,base_height-distance_base_height_cylinder_center-fit_cube_width/2]) rotate([90,0,0]) fit_cube(fit_cube_length=fit_cube_length,fit_cube_width=fit_cube_width,first_layer_tolerance=first_layer_tolerance);
+
+create_washer(washer_width=washer_width,washer_diam=main_cylinder_diam,small_cylinder_pocket_diam=small_cylinder_pocket_diam);
