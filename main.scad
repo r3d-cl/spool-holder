@@ -1,5 +1,4 @@
 include <base.scad>
-include <washer.scad>
 include <half_roller.scad>
 include <fit_cube.scad>
 include <functions.scad>
@@ -34,9 +33,10 @@ module front_assembly(){
 
 create_base();
 
-front_assembly();
+left_front_assembly();
+//front_assembly();
 //mirror([1,0,0]) front_assembly();
 
 //half_roller();
 
-//translate([-distance_between_rollers/2-fit_cube_width/2,fit_cube_length/2,base_height-distance_base_height_cylinder_center-fit_cube_width/2]) rotate([90,0,0]) fit_cube();
+translate([-distance_between_rollers/2-fit_cube_width/2,fit_cube_length/2,base_height-distance_base_height_cylinder_center-fit_cube_width/2]) rotate([90,0,0]) fit_cube();
