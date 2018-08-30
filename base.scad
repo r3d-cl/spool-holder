@@ -1,14 +1,14 @@
 use <functions.scad>
 
-module logo(logo_width){
+module logo(){
     length_por_width=2.065;
     length=60;
     width=length/length_por_width;
     rotate([0,0,90]) translate([-length/2,-width/2,0]) resize([length,width]) linear_extrude(height = logo_width) import("logo.dxf");
 }
 
-module space_for_rollers(x,base_width,axis_height,small_cylinder_diam,radius_tolerance){
-    pocket_width=small_cylinder_diam+2*radius_tolerance;
+module space_for_rollers(x,base_width,axis_height,small_cylinder_diam,diam_tolerance){
+    pocket_width=small_cylinder_diam+diam_tolerance;
 
     translate([x,0,axis_height]) {
         rotate([90,0,0]) create_cylinder(base_width+1,pocket_width);
@@ -44,18 +44,18 @@ module save_material_pocket(){
 
 module create_base(){
     small_cylinder_radius_tol=1;
-    radius_tolerance=1;
+    diam_tolerance=1;
     wall_support_height=12;
 
-    base_length=distance_between_rollers+small_cylinder_diam+2*radius_tolerance+6*wall_thickness;
+    base_length=distance_between_rollers+small_cylinder_diam+2*diam_tolerance+6*wall_thickness;
 
     difference(){
         translate([-base_length/2,-base_width/2,0]) cube([base_length,base_width,base_height]);
         pocket_width=base_width-2*wall_thickness;
         translate([-base_length/2-1,-pocket_width/2,wall_thickness]) cube([base_length+2,pocket_width,base_height]);
         axis_height=base_height-distance_base_height_cylinder_center;
-        space_for_rollers(-distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance);
-        space_for_rollers(distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,radius_tolerance);
+        space_for_rollers(-distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,diam_tolerance);
+        space_for_rollers(distance_between_rollers/2,base_width,axis_height,small_cylinder_diam,diam_tolerance);
         save_material_pocket(base_height=base_height,pocket_depth=base_height-wall_support_height);
      }
      translate([0,0,wall_thickness]) logo(logo_width);
