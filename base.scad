@@ -11,8 +11,8 @@ module space_for_rollers(x,base_width,axis_height,small_cylinder_diam,diam_toler
     pocket_width=small_cylinder_diam+diam_tolerance;
 
     translate([x,0,axis_height]) {
-        rotate([90,0,0]) create_cylinder(base_width+1,small_cylinder_pocket_diam);
-        translate([-small_cylinder_pocket_diam/2,-(base_width+1)/2,0]) cube([small_cylinder_pocket_diam,base_width+1,100,]);
+        rotate([90,0,0]) create_cylinder(base_width+1,pocket_width);
+        translate([-pocket_width/2,-(base_width+1)/2,0]) cube([pocket_width,base_width+1,100,]);
     }
 }
 

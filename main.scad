@@ -33,9 +33,9 @@ module front_assembly(){
 
 create_base();
 
-left_front_assembly();
-//front_assembly();
-//mirror([1,0,0]) front_assembly();
+//left_front_assembly();
+front_assembly();
+mirror([1,0,0]) front_assembly();
 
 //half_roller();
 
