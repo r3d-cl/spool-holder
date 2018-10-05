@@ -9,13 +9,18 @@ rolling_distance=90;
 small_cylinder_diam=4;
 max_cylinder_diam=30;
 main_cylinder_diam=20;
+roller_ult_large_cyl_height=2;
 
 wall_thickness=2;
 logo_width=2;
 distance_between_rollers=120;
 distance_base_height_cylinder_center=2*small_cylinder_diam;
 base_height=wall_thickness+5+main_cylinder_diam/2+distance_base_height_cylinder_center+logo_width;
-base_width=rolling_distance+2*max_cylinder_diam-main_cylinder_diam-small_cylinder_diam+2*wall_thickness;
+base_width=rolling_distance+max_cylinder_diam-main_cylinder_diam+2*roller_ult_large_cyl_height+2+2*wall_thickness;
+
+base_width=110;
+
+echo(base_width);
 
 fit_cube_length=20;
 fit_cube_width=10;
@@ -31,12 +36,13 @@ module front_assembly(){
     mirror([0,1,0]) left_front_assembly();
 }
 
-create_base();
+//half_roller();
 
-//left_front_assembly();
-front_assembly();
-mirror([1,0,0]) front_assembly();
+create_base();
+left_front_assembly();
+//front_assembly();
+//mirror([1,0,0]) front_assembly();
 
 //half_roller();
 
-translate([-distance_between_rollers/2-fit_cube_width/2,fit_cube_length/2,base_height-distance_base_height_cylinder_center-fit_cube_width/2]) rotate([90,0,0]) fit_cube();
+//translate([-distance_between_rollers/2-fit_cube_width/2,fit_cube_length/2,base_height-distance_base_height_cylinder_center-fit_cube_width/2]) rotate([90,0,0]) fit_cube();
