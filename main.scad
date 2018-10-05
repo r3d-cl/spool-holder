@@ -16,7 +16,6 @@ logo_width=2;
 distance_between_rollers=120;
 distance_base_height_cylinder_center=2*small_cylinder_diam;
 base_height=wall_thickness+5+main_cylinder_diam/2+distance_base_height_cylinder_center+logo_width;
-base_width=rolling_distance+max_cylinder_diam-main_cylinder_diam+2*roller_ult_large_cyl_height+2+2*wall_thickness;
 
 base_width=110;
 
@@ -40,6 +39,8 @@ module front_assembly(){
 
 create_base();
 left_front_assembly();
+
+//fit_cube();
 //front_assembly();
 //mirror([1,0,0]) front_assembly();
 
